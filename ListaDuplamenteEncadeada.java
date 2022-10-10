@@ -4,7 +4,7 @@ public class ListaDuplamenteEncadeada {
     Nó primeiro, ultimo;
     int quantidade_nos;
 
-
+/* --------------------------
     public ListaDuplamenteEncadeada() {
         primeiro = null;
         ultimo = null;
@@ -128,8 +128,72 @@ public class ListaDuplamenteEncadeada {
         return  msg;
     }
 
-    
+
+*/
+
+    //-------------------------------- teste ------------------------------//
+
+    public  boolean listaVazia(){
+        if(primeiro == null && ultimo==null){
+            return  true;
+        }else{
+            return false;
+        }
+    }
+
+    public  void adicionarInicio(int e){
+        Nó novo = new Nó(e);
+        if(!listaVazia()){
+            primeiro.anterior_no = novo;
+            novo.proximo_no = primeiro;
+        }else{
+            ultimo = novo;
+        }
+        primeiro = novo;
+    }
+
+    public void adicionarFinal(int e){
+        Nó novo = new Nó(e);
+        if(listaVazia()){
+            primeiro = novo;
+        }else{
+            ultimo.proximo_no = novo;
+            novo.anterior_no = ultimo;
+
+        }
+        ultimo = novo;
+
+    }
+
+    public  Nó removerInicio() throws Exception {
+        Nó removido = null;
+        if (listaVazia()){
+            throw new  Exception("lista vazia") ;
+        }else {
+            removido = primeiro;
+            primeiro = primeiro.proximo_no;
+            primeiro.anterior_no=null;
+            removido.proximo_no = null;
+        }
+        return removido;
+    }
 
 
+    public Nó removerFinal() throws Exception {
+        Nó removido = null;
+        Nó aux ;
+        if(listaVazia()){
+            throw  new Exception("lista vazia");
+        }else {
+            removido = aux = primeiro;
+            while (removido.proximo_no!=null){
+                aux = removido;
+                removido = removido.proximo_no;
+            }
+            removido.anterior_no=null;
+            aux.proximo_no=null;
+        }
+        return removido;
+    }
 
 }
