@@ -1,13 +1,29 @@
 public class Main {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         ListaDuplamenteEncadeada l = new ListaDuplamenteEncadeada();
-        l.Adicionar_inicio(100);
-        l.inserirPosicao(10,1);
 
-        System.out.println(l.pegarPosicao(1));
 
+        l.adicionarInicio(5);
+        l.adicionarInicio(500);
+        l.adicionarFinal(5000);
+        l.adicionarFinal(5);
+        l.adicionarInicio(0);
+
+        System.out.println(l.mostrarLista());
         System.out.println(l.mostarListaInversa());
+        System.out.println(l.buscarElemento(5000));
+        System.out.println(l.buscarElemento(50000));
+        l.removerMeio();
+        l.adicionarInicio(5);
+        System.out.println(l.possuiRepetidos());
+        System.out.println(l.excluirPosicao(0));
+        System.out.println(l.mostrarLista());
+
+
+
+
+
     }
 }
