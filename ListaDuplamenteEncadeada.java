@@ -1,54 +1,52 @@
 public class ListaDuplamenteEncadeada {
 
 
-    Nó primeiro, ultimo;
+    Nó inicioLista, finalLista;
     int quantidade_nos;
 
-/* --------------------------
+
     public ListaDuplamenteEncadeada() {
-        primeiro = null;
-        ultimo = null;
+        inicioLista = null;
+        finalLista = null;
         quantidade_nos = 0;
 
     }
 
+/*
+
     public boolean Lista_vazia() {
-        if (this.primeiro == null && this.ultimo == null) {
+        if (this.inicioLista == null && this.finalLista == null) {
             return true;
         } else {
             return false;
         }
     }
 
-    public void Adicionar_inicio(int e) {
+   public  void adicionarInicio(int e){
         Nó novo = new Nó(e);
-        if (!Lista_vazia()) {
-            novo.anterior_no = ultimo;
-            novo.proximo_no = primeiro;
-        } else if (primeiro == null) {
-            ultimo = novo;
-        } else {
-            novo.proximo_no = primeiro;
-            primeiro.anterior_no = novo;
+        if(!listaVazia()){
+            inicioLista.anterior_no = novo;
+            novo.proximo_no = inicioLista;
+        }else{
+            finalLista = novo;
         }
-        primeiro = novo;
+        inicioLista = novo;
         quantidade_nos++;
     }
 
 
-    public  void  Adicionar_final(int e){
+     public void adicionarFinal(int e){
         Nó novo = new Nó(e);
-        novo.proximo_no = null;
-        novo.anterior_no=null;
-
-        if(Lista_vazia()){
-            primeiro = novo;
+        if(listaVazia()){
+            inicioLista = novo;
         }else{
-            ultimo.proximo_no = novo;
-            novo.anterior_no = ultimo;
+            finalLista.proximo_no = novo;
+            novo.anterior_no = finalLista;
+
         }
-        ultimo = novo;
+        finalLista = novo;
         quantidade_nos++;
+
     }
 
     public  void inserirPosicao(int e ,int pos){
@@ -71,7 +69,7 @@ public class ListaDuplamenteEncadeada {
 
 
     public Nó pegarPosicao(int pos){
-        Nó posNó = primeiro;
+        Nó posNó = inicioLista;
         int i = 0;
         if(Lista_vazia()){
             System.out.println("lista vazia");
@@ -93,16 +91,16 @@ public class ListaDuplamenteEncadeada {
             msg = "Posição não existe";
         }else if(pos==0){
             if(novo.proximo_no==null){
-                primeiro = ultimo = null;
+                inicioLista = finalLista = null;
                 msg = "Excluida posição:" + pos +", valor:"+novo.elemento_armazenado;
             }else{
-                primeiro = novo.proximo_no;
-                primeiro.anterior_no = null;
+                inicioLista = novo.proximo_no;
+                inicioLista.anterior_no = null;
                 msg = "Excluida posição:"+pos+", valor: "+novo.elemento_armazenado;
             }
         }else if(pos==quantidade_nos-1){
-            ultimo=novo.anterior_no;
-            ultimo.proximo_no=null;
+            finalLista =novo.anterior_no;
+            finalLista.proximo_no=null;
             msg = "Excluida posição:"+pos+", valor: "+ novo.elemento_armazenado;
         }else{
             novo.anterior_no.proximo_no = novo.proximo_no;
@@ -117,7 +115,7 @@ public class ListaDuplamenteEncadeada {
 
     public  String mostarListaInversa(){
         int i = quantidade_nos - 1;
-        Nó novo = ultimo;
+        Nó novo = finalLista;
         String msg = "";
         while (novo !=null){
             msg = msg + "posição:" + i + ", valor: " + novo.elemento_armazenado + "\n";
@@ -129,52 +127,64 @@ public class ListaDuplamenteEncadeada {
     }
 
 
+
 */
+
 
     //-------------------------------- teste ------------------------------//
 
     public  boolean listaVazia(){
-        if(primeiro == null && ultimo==null){
+        if(inicioLista == null && finalLista ==null){
             return  true;
         }else{
             return false;
         }
     }
 
-    public  void adicionarInicio(int e){
+
+//----
+    public void adicionarInicio(int e) {
+
         Nó novo = new Nó(e);
-        if(!listaVazia()){
-            primeiro.anterior_no = novo;
-            novo.proximo_no = primeiro;
-        }else{
-            ultimo = novo;
+       if (inicioLista == null) {
+            finalLista = novo;
+        } else {
+            novo.proximo_no = inicioLista;
+            inicioLista.anterior_no = novo;
         }
-        primeiro = novo;
+        inicioLista = novo;
+        quantidade_nos++;
     }
 
-    public void adicionarFinal(int e){
+
+    public  void  adicionarFinal(int e){
         Nó novo = new Nó(e);
+        novo.proximo_no = null;
+        novo.anterior_no=null;
+
         if(listaVazia()){
-            primeiro = novo;
+            inicioLista = novo;
         }else{
-            ultimo.proximo_no = novo;
-            novo.anterior_no = ultimo;
-
+            finalLista.proximo_no = novo;
+            novo.anterior_no = finalLista;
         }
-        ultimo = novo;
-
+        finalLista = novo;
+        quantidade_nos++;
     }
+
+
 
     public  Nó removerInicio() throws Exception {
         Nó removido = null;
         if (listaVazia()){
             throw new  Exception("lista vazia") ;
         }else {
-            removido = primeiro;
-            primeiro = primeiro.proximo_no;
-            primeiro.anterior_no=null;
+            removido = inicioLista;
+            inicioLista = inicioLista.proximo_no;
+            inicioLista.anterior_no=null;
             removido.proximo_no = null;
         }
+        quantidade_nos--;
         return removido;
     }
 
@@ -185,7 +195,7 @@ public class ListaDuplamenteEncadeada {
         if(listaVazia()){
             throw  new Exception("lista vazia");
         }else {
-            removido = aux = primeiro;
+            removido = aux = inicioLista;
             while (removido.proximo_no!=null){
                 aux = removido;
                 removido = removido.proximo_no;
@@ -193,7 +203,149 @@ public class ListaDuplamenteEncadeada {
             removido.anterior_no=null;
             aux.proximo_no=null;
         }
+        quantidade_nos--;
         return removido;
     }
+
+
+    public  String mostrarLista(){
+        int i = 0;
+        Nó novo = inicioLista;
+        String msg = "";
+        while (novo!=null){
+            msg = msg + "Posição:" + i + ", valor: " + novo.elemento_armazenado + "\n";
+            novo = novo.proximo_no;
+            i++;
+        }
+        return msg;
+    }
+
+    public  String mostarListaInversa(){
+        int i = quantidade_nos - 1;
+        Nó novo = finalLista;
+        String msg = "";
+        while (novo !=null){
+            msg = msg + "posição:" + i + ", valor: " + novo.elemento_armazenado + "\n";
+            novo = novo.anterior_no;
+            i--;
+        }
+
+        return  msg;
+    }
+
+    public  String excluirPosicao  (int pos){
+        String msg ="";
+        Nó novo = pegarPosicao(pos);
+        if (listaVazia()){
+            msg = "Posição não existe";
+        }else if(pos==0){
+            if(novo.proximo_no==null){
+                inicioLista = finalLista = null;
+                msg = "Excluida posição:" + pos +", valor:"+novo.elemento_armazenado;
+            }else{
+                inicioLista = novo.proximo_no;
+                inicioLista.anterior_no = null;
+                msg = "Excluida posição:"+pos+", valor: "+novo.elemento_armazenado;
+            }
+        }else if(pos==quantidade_nos-1){
+            finalLista =novo.anterior_no;
+            finalLista.proximo_no=null;
+            msg = "Excluida posição:"+pos+", valor: "+ novo.elemento_armazenado;
+        }else{
+            novo.anterior_no.proximo_no = novo.proximo_no;
+            novo.proximo_no.anterior_no = novo.anterior_no;
+            msg = "excluida posição: " + pos + ", valor: " + novo.elemento_armazenado;
+        }
+        quantidade_nos--;
+        return msg;
+    }
+
+    public Nó pegarPosicao(int pos){
+        Nó posNó = inicioLista;
+        int i = 0;
+        if(listaVazia()){
+            System.out.println("lista vazia");
+        }else{
+            while (posNó !=null &&  i<pos){
+                posNó = posNó.proximo_no;
+                i++;
+            }
+        }
+        return  posNó;
+    }
+
+    public  void inserirPosicao(int e ,int pos){
+        Nó novo = new Nó(e);
+        Nó aux ;
+        if(pos==0){
+            adicionarInicio(e);
+        }else if(pos>=quantidade_nos){
+            adicionarFinal(e);
+        }else{
+            aux = pegarPosicao(pos);
+            novo.proximo_no = aux;
+            novo.anterior_no = aux.anterior_no;
+            aux.anterior_no.proximo_no  = novo;
+            aux.anterior_no = novo;
+            quantidade_nos++;
+        }
+
+    }
+
+    public void removerMeio() throws Exception {
+
+        int meio;
+        if (listaVazia()){
+            throw new Exception("Lista vazia");
+        }else if(quantidade_nos%2==1){
+            meio = quantidade_nos/2;
+            System.out.println(excluirPosicao(meio));
+
+        }else{
+            System.out.println("não foi possivel pegar o meio, pois possui uma quantidade par de elementos");
+        }
+    }
+
+    public boolean possuiRepetidos() throws Exception {
+
+        Nó aux;
+        Nó elemento;
+
+        if(listaVazia()){
+            throw new Exception("lista vazia");
+        }else{
+            for (int i =0;i<quantidade_nos;i++){
+
+                elemento = this.pegarPosicao(i);
+
+                for(int x = i+1;x<quantidade_nos;x++){
+
+                    aux = this.pegarPosicao(x);
+
+                    if(aux.elemento_armazenado == elemento.elemento_armazenado){
+                        return true;
+                    }
+                }
+            }
+
+        }
+
+        return false;
+    }
+
+    public int buscarElemento(int e)  {
+
+        Nó aux = inicioLista;
+
+        for(int i = 0;i<quantidade_nos;i++){
+
+                if(e==aux.elemento_armazenado){
+                    return e;
+                }
+                aux = aux.proximo_no;
+        }
+        return -1;
+    }
+
 
 }
