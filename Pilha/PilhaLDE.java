@@ -24,39 +24,41 @@ public class PilhaLDE {
         }
 
 
-        //----
-        public void adicionarInicio(int e) {
+      public  void  adicionarFinal(int e){
+        Nó novo = new Nó(e);
+        novo.proximo_no = null;
+        novo.anterior_no=null;
 
-            Nó novo = new Nó(e);
-            if (inicioLista == null) {
-                finalLista = novo;
-            } else {
-                novo.proximo_no = inicioLista;
-                inicioLista.anterior_no = novo;
-            }
+        if(listaVazia()){
             inicioLista = novo;
-            quantidade_nos++;
+        }else{
+            finalLista.proximo_no = novo;
+            novo.anterior_no = finalLista;
         }
+        finalLista = novo;
+        quantidade_nos++;
+    }
 
 
 
 
-
-        public  Nó removerInicio() throws Exception {
-            Nó removido = null;
-            if (listaVazia()){
-                throw new  Exception("lista vazia") ;
-            }else {
-                removido = inicioLista;
-                inicioLista = inicioLista.proximo_no;
-                inicioLista.anterior_no=null;
-                removido.proximo_no = null;
+    public Nó removerFinal() throws Exception {
+        Nó removido = null;
+        Nó aux ;
+        if(listaVazia()){
+            throw  new Exception("lista vazia");
+        }else {
+            removido = aux = inicioLista;
+            while (removido.proximo_no!=null){
+                aux = removido;
+                removido = removido.proximo_no;
             }
-            quantidade_nos--;
-            return removido;
+            removido.anterior_no=null;
+            aux.proximo_no=null;
         }
-
-
+        quantidade_nos--;
+        return removido;
+    }
 
 
 
